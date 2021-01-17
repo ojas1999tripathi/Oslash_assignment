@@ -16,18 +16,18 @@ The application you're responsible for building, should allow data from three us
 
 ### Features :
 
-For Users:
+#### For Users:
 
 1. Create a tweet
 2. List of tweets (Simple chronological timeline of own tweets, need not contain replies)
 3. Delete own tweet
 
-####For Admin:
+#### For Admin:
 
 1. Edit user details
 2. Initiate CRUD of tweets on users' behalf
 
-####For Super-admin:
+#### For Super-admin:
 
 1. Approve actions initiated by admin
 2. View logs (e.g access/action/audit log)
