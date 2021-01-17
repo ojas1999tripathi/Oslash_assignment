@@ -1,0 +1,15 @@
+const editTweet = (e, tweet_id, newtweet) => {
+      e.preventDefault();
+      var fd = new FormData();
+      fd.append("tweet", newtweet);
+      fd.append("tweet_id", tweet_id);
+      axios
+        .post(apiUrl + "/updatetweet.php", fd)
+        .then(function (response) {
+          if (response.data.response === "success") {
+            setOslash_assignment(Oslash_assignment === 1 ? 0 : 1);
+          } else alert("Error: " + response.data.result);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });

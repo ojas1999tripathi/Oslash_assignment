@@ -1,0 +1,5 @@
+{
+    id: id of tweet,
+    tweet: tweet text,
+    time: timestamp of tweet post,
+}

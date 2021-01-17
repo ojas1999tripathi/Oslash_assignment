@@ -1,0 +1,15 @@
+const deleteTweet = (e, tweet_id) => {
+      e.preventDefault();
+      var fd = new FormData();
+      fd.append("tweet_id", tweet_id);
+      axios
+        .post(apiUrl + "/deletetweet.php", fd)
+        .then(function (response) {
+          if (response.data.response === "success") {
+            setOslash_assignment(Oslash_assignment === 1 ? 0 : 1);
+          } else alert("Error: " + response.data.result);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };

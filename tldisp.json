@@ -1,0 +1,81 @@
+const TweetList = () => {
+    const [tweets, setTweets] = useState([]);
+    useEffect(() => {
+      axios
+        .get(apiUrl + "/gettweets.php")
+        .then(function (response) {
+          if (response.data.response === "success") {
+            setTweets(response.data.result);
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    });
+
+    const SingleTweet = (props) => {
+      const [isEditing, setIsEditing] = useState(0);
+      const [newtweet, setNewtweet] = useState(props.info.tweet);
+      return (
+        <div
+          style={{
+            padding: "10px",
+            marginBottom: "10px",
+            background: "#eee",
+            overflow: "hidden"
+          }}
+        >
+          {isEditing === 1 ? (
+            <div>
+              <form onSubmit={(e) => editTweet(e, props.info.id, newtweet)}>
+                <textarea
+                  style={{ width: "100%" }}
+                  onChange={(e) => setNewtweet(e.target.value)}
+                  value={newtweet}
+                ></textarea>
+                <button
+                  type={"submit"}
+                  disabled={newtweet.length > 0 ? false : true}
+                  style={{ float: "right" }}
+                >
+                  Update
+                </button>
+              </form>
+            </div>
+          ) : (
+            <div>
+              <span style={{ color: "blue", fontWeight: "bold" }}>@User</span>
+              &nbsp;
+              {props.info.tweet}
+              <div>
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsEditing(1);
+                  }}
+                >
+                  Edit
+                </a>
+                &nbsp;&nbsp;
+                <a href="#" onClick={(e) => deleteTweet(e, props.info.id)}>
+                  Delete
+                </a>
+                <span style={{ float: "right" }}>
+                  {new Date(props.info.time * 1000).toLocaleString()}
+                </span>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    };
+
+    return (
+      <div style={{ marginTop: "10px" }}>
+        {tweets.map((tweet) => (
+          <SingleTweet key={tweet.id + "_" + tweet.time} info={tweet} />
+        ))}
+      </div>
+    );
+  };

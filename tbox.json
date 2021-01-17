@@ -1,0 +1,46 @@
+const TweetBox = () => {
+    const [tweet, setTweet] = useState("");
+
+    const postTweet = (e) => {
+      e.preventDefault();
+      var fd = new FormData();
+      fd.append("tweet", tweet);
+      axios
+        .post(apiUrl + "/posttweet.php", fd)
+        .then(function (response) {
+          if (response.data.response === "success") {
+            setOslash_assignment(Oslash_assignment === 1 ? 0 : 1);
+          } else alert("Error: " + response.data.result);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
+
+    return (
+      <div
+        style={{
+          padding: "10px",
+          background: "#4C9BE5",
+          borderRadius: "5px",
+          boxSizing: "border-box",
+          overflow: "hidden"
+        }}
+      >
+        <form onSubmit={postTweet}>
+          <textarea
+            style={{ width: "100%" }}
+            onChange={(e) => setTweet(e.target.value)}
+            value={tweet}
+          ></textarea>
+          <button
+            type={"submit"}
+            disabled={tweet.length > 0 ? false : true}
+            style={{ float: "right" }}
+          >
+            Post
+          </button>
+        </form>
+      </div>
+    );
+  };
